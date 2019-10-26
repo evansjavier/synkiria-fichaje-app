@@ -14,7 +14,7 @@
     <plugin name="cordova-plugin-file" source="npm" spec="~4.3.3" />
     <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.7.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.4" />
-    <gap:plugin platform="android" name="cordova-plugin-autostart" version="2.3.0" source="npm"/>
+    <plugin platform="android" name="cordova-plugin-autostart" version="2.3.0" source="npm"/>
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
