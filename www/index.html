@@ -63,9 +63,11 @@
         console.log("window.open works well");
         var ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no');
         
+        
+        cordova.plugins.autoStart.enable();
     }
     
-    cordova.plugins.autoStart.enable();
+    
     
     </script>
     
