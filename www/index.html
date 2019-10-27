@@ -57,17 +57,25 @@
     
     <script>
     
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            
+            console.log("window.open works well");
+            var ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no');
+            
+            
+            
+            
+            ref.addEventListener("exit", onCloseInAppBrowser);
+            
+            cordova.plugins.autoStart.enable();
+        }
         
-        console.log("window.open works well");
-        var ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no');
+        function onCloseInAppBrowser(){
+            cordova.plugins.exit();
+            //console.log("cerrado inappbrowser");
+        }
         
-        
-        cordova.plugins.autoStart.enable();
-    }
-    
-    
     
     </script>
     
