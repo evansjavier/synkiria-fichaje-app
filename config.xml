@@ -20,7 +20,13 @@
     
     
     <plugin name="cordova-plugin-autostart" platform="android" source="npm" version="2.3.0" />
+    
     <platform name="android">
+        
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+        </edit-config>
+        
         <icon density="mdpi" src="www/res/icon-fichaje/android/mipmap-mdpi/ic_launcher.png" />
         <icon density="hdpi" src="www/res/icon-fichaje/android/mipmap-hdpi/ic_launcher.png" />
         <icon density="xhdpi" src="www/res/icon-fichaje/android/mipmap-xhdpi/ic_launcher.png" />
