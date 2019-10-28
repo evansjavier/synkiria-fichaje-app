@@ -68,15 +68,15 @@
 
 <body>
     
-    <div id="status-message">
-    </div>
-    
     <div class="loading">
         <div class="center">
-            <span class="status" id="status-loading" style="display: none;">Cargando...</span>
+            <span class="status" id="status-loading" style="display: none;">Conectando...</span>
             <span class="status status-error" id="status-error-msg" style="display: none;">No se pudo conectar</span>
-            <br>
-            <span class="status status-error" id="status-error-link" style="display: none;"><a href="#">Reintentar</a> </span>    
+            
+            <br><br>
+            <span class="status status-error" id="status-error-link" style="display: none;">
+                <a href="#" onclick="tryStartConnection()">Reintentar</a>
+            </span>    
         </div>
         
     </div>
@@ -84,58 +84,84 @@
     <script type="text/javascript" src="cordova.js"></script>
     
     <script>
+        
+        
         document.addEventListener("deviceready", onDeviceReady, false);
         
         
         var ref = null;
         
         function onDeviceReady() {
+            tryStartConnection();
+            cordova.plugins.autoStart.enable();
+        }
+        
+        
+        function tryStartConnection() {
+            document.querySelectorAll('.status').forEach(function(el) {
+              el.setAttribute('style', 'display:none;');  
+            });
+            document.querySelector('#status-loading').setAttribute('style', 'display:inline;')
+            
+            
             
             ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no,hidden=yes');
             
-            //ref.show();
-            
             ref.addEventListener('loadstart', loadStartCallBack);
-                        
-            
             ref.addEventListener('loadstop', loadStopCallBack);
-            //ref.addEventListener('loaderror', loadErrorCallBack);
+            ref.addEventListener('loaderror', loadErrorCallBack);
             ref.addEventListener("exit", onCloseInAppBrowser);
-            
-            cordova.plugins.autoStart.enable();
         }
+        
         
         function onCloseInAppBrowser(){
             cordova.plugins.exit();
             console.log("cerrado inappbrowser");
         }
         
+        
         function loadStartCallBack() {
-            document.querySelector('.status').setAttribute('style', 'display:none;');
+            document.querySelectorAll('.status').forEach(function(el) {
+              el.setAttribute('style', 'display:none;');  
+            })
+            
             
             var loading = document.querySelector('#status-loading');
             loading.setAttribute('style', 'display:inline;');
         }
         
+        
         function loadStopCallBack() {
-            console.log("loadStop");
-            
-            var status = document.querySelector('.status');
-            status.setAttribute('style', 'display:none;');
-            
             
             if (ref != undefined) {
                 ref.show();
             }
             else{
-                alert("falló");
-                document.querySelector('.status-error').setAttribute('style', 'display:inline;');
+                loadErrorCallBack();
             }
-        }    
+        }
+        
+        function loadErrorCallBack() {
+            
+            document.querySelectorAll('.status').forEach(function(el) {
+              el.setAttribute('style', 'display:none;');  
+            })
+            
+            document.querySelectorAll('.status-error').forEach(function(el) {
+              el.setAttribute('style', 'display:inline;');  
+            })
+        }
         
     
     </script>
-    
+    <style>
+        *{
+            font-family: sans-serif;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
 </body>
 
 </html>
