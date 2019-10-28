@@ -110,7 +110,7 @@
             ref.addEventListener('loadstart', loadStartCallBack);
             ref.addEventListener('loadstop', loadStopCallBack);
             ref.addEventListener('loaderror', loadErrorCallBack);
-            ref.addEventListener("exit", onCloseInAppBrowser);
+            
         }
         
         
@@ -147,8 +147,10 @@
 
 
         function loadStopCallBack() {
-            if (ref != undefined) 
+            if (ref != undefined){
                 ref.show();
+                ref.addEventListener("exit", onCloseInAppBrowser);
+            }
         }
         
     
