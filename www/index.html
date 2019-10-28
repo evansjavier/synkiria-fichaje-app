@@ -48,24 +48,39 @@
     
     <allow-navigation href="*" />
 
-    <title>Hello World</title>
+    <title>Fichaje</title>
 </head>
 
 <body>
-    <!--iframe src="http://fichar.synkiria.com/"></iframe-->
+    
+    <div id="status-message">
+    </div>
+    
+    <div>Cargando...</div>
+    
     <script type="text/javascript" src="cordova.js"></script>
     
     <script>
-    
         document.addEventListener("deviceready", onDeviceReady, false);
+        
+        
+        var ref = null;
+        
         function onDeviceReady() {
             
-            console.log("window.open works well");
-            var ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no');
+            ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no,hidden=yes');
+            
+            //ref.show();
+            
+            //ref.addEventListener('loadstart', loadStartCallBack);
+            ref.addEventListener('loadstart', function(event) {
+  alert('Began loading this page: ' + JSON.stringify(event));
+});
+
             
             
-            
-            
+            ref.addEventListener('loadstop', loadStopCallBack);
+            //ref.addEventListener('loaderror', loadErrorCallBack);
             ref.addEventListener("exit", onCloseInAppBrowser);
             
             cordova.plugins.autoStart.enable();
@@ -73,27 +88,32 @@
         
         function onCloseInAppBrowser(){
             cordova.plugins.exit();
-            //console.log("cerrado inappbrowser");
+            console.log("cerrado inappbrowser");
         }
+        
+        function loadStartCallBack() {
+         
+            //$('#status-message').text("loading please wait ...");
+            alert("loading..");
+            console.log("loading please wait ...");
+            
+         
+        }
+        
+        function loadStopCallBack() {
+            console.log("loadStop");
+            
+            if (ref != undefined) {
+                ref.show();
+            }
+            else{
+                alert("falló");
+            }
+        }    
         
     
     </script>
     
-    <!--script type="text/javascript" src="js/index.js"></script-->
-    <!--script type="text/javascript">
-        app.initialize();
-    </script-->
-    <!--style type="text/css">
-        iframe{
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style->
 </body>
 
 </html>
