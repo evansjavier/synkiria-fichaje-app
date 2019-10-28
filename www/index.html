@@ -130,17 +130,7 @@
             loading.setAttribute('style', 'display:inline;');
         }
         
-        
-        function loadStopCallBack() {
-            
-            if (ref != undefined) {
-                ref.show();
-            }
-            else{
-                loadErrorCallBack();
-            }
-        }
-        
+
         function loadErrorCallBack() {
             
             document.querySelectorAll('.status').forEach(function(el) {
@@ -150,6 +140,15 @@
             document.querySelectorAll('.status-error').forEach(function(el) {
               el.setAttribute('style', 'display:inline;');  
             })
+            
+            ref.close();
+            ref = undefined;
+        }
+
+
+        function loadStopCallBack() {
+            if (ref != undefined) 
+                ref.show();
         }
         
     
