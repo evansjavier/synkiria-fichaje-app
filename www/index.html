@@ -71,7 +71,7 @@
     <div class="loading">
         <div class="center">
             <span class="status" id="status-loading" style="display: none;">Conectando...</span>
-            <span class="status status-error" id="status-error-msg" style="display: none;">No se pudo conectar</span>
+            <span class="status status-error" id="status-error-msg" style="display: none;">No se pudo conectar <span id="errorcode"></span></span>
             
             <br><br>
             <span class="status status-error" id="status-error-link" style="display: none;">
@@ -98,6 +98,7 @@
         
         
         function tryStartConnection() {
+            
             document.querySelectorAll('.status').forEach(function(el) {
               el.setAttribute('style', 'display:none;');  
             });
@@ -105,11 +106,12 @@
             
             
             
-            ref = cordova.InAppBrowser.open('http://fichar.synkiria.com/', '_blank', 'location=no,hidden=yes');
+            ref = cordova.InAppBrowser.open('https://fichar.synkiria.coasdfasdfsdm/', '_blank', 'location=no,hidden=yes');
             
             ref.addEventListener('loadstart', loadStartCallBack);
             ref.addEventListener('loadstop', loadStopCallBack);
             ref.addEventListener('loaderror', loadErrorCallBack);
+            ref.addEventListener('message', messageCallBack);
             
         }
         
@@ -152,6 +154,12 @@
                 ref.addEventListener("exit", onCloseInAppBrowser);
             }
         }
+        
+        function messageCallBack(message) {
+            alert("message callback");
+            document.getElementById("errorcode").innerHTML = "500000";
+        }
+        
         
     
     </script>
